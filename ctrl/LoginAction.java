@@ -21,9 +21,11 @@ public class LoginAction implements Action{
 		MemberVO mVO=dao.selectOne(vo);
 		if(mVO!=null){
 			session.setAttribute("mid", mVO.getMid());
+			session.setAttribute("mpw", mVO.getMpw());
 			ActionForward forward=new ActionForward();
 			forward.setPath("main.do");
-			forward.setRedirect(true);
+			forward.setRedirect(false);
+			request.setAttribute("cnt", request.getParameter("cnt"));
 			return forward;
 		}
 		else{

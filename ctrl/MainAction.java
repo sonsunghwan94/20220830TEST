@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import board.BoardDAO;
 import board.BoardSet;
 import board.BoardVO;
+import member.MemberDAO;
+import member.MemberVO;
 
 public class MainAction implements Action{
 
@@ -15,16 +17,26 @@ public class MainAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		BoardDAO dao=new BoardDAO();
 		BoardVO vo=new BoardVO();
+		MemberDAO mdao=new MemberDAO();
+		MemberVO mvo=new MemberVO();
 		int cnt;
 		boolean flag=true;
 		if(request.getParameter("cnt")==null){ // main페이지 첫 진입
 			cnt=2; // 초기 상태에서 보여줄 게시물의 갯수
 			vo.setCnt(cnt);
 		}else{ // main페이지에서 더보기 요청
+			System.out.println("cnt:"+request.getParameter("cnt"));
 			cnt=Integer.parseInt(request.getParameter("cnt"));
 			vo.setCnt(cnt);
+			System.out.println("로그["+request.getParameter("myid")+"]");
+			if(request.getParameter("myid")!=null) {
+				System.out.println("로그["+request.getParameter("myid")+"]");
+				vo.setMid(request.getParameter("myid"));
+			}
 		}
-		
+		ArrayList<MemberVO> datasM=mdao.selectAll(mvo);
+		request.setAttribute("datasM", datasM);
+		System.out.println("로그 datasM:"+datasM);
 		ArrayList<BoardSet> datas=dao.selectAll(vo);
 		vo.setCnt(cnt+1);
 		ArrayList<BoardSet> datasNext=dao.selectAll(vo);

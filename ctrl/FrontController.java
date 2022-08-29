@@ -45,11 +45,11 @@ public class FrontController extends HttpServlet {
 	
 	private void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String uri=request.getRequestURI();
-		System.out.println(uri);
+
 		String cp=request.getContextPath();
-		System.out.println(cp);
+
 		String command=uri.substring(cp.length());
-		System.out.println(command);
+	
 		
 		ActionForward forward=null;
 		if(command.equals("/main.do")) {
@@ -112,6 +112,13 @@ public class FrontController extends HttpServlet {
 		}else if(command.equals("/login.do")) {
 			try {
 				forward=new LoginAction().execute(request, response);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if(command.equals("/deleteM.do")) {
+			try {
+				forward=new DeleteMAction().execute(request, response);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -23,7 +23,7 @@ public class InsertRAction implements Action{
 		ActionForward forward=new ActionForward();
 		forward.setPath("main.do");
 		forward.setRedirect(false);
-		
+		request.setAttribute("cnt",request.getParameter("cnt"));
 		return forward;
 	}
 
